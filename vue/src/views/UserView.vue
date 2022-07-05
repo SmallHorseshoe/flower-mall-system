@@ -70,7 +70,7 @@
                 </el-descriptions>
               </div>
               <div style=" margin:0 2px; float: left ; border: 1px solid #e3e0e0">
-                <el-avatar shape="square" :src="props.row.avatar" :size="176" fit="fill"
+                <el-avatar shape="square" :src="props.row.avatar" :size="176" fit="fill" style="background-color: white"
                            @error="userForm.avatar='http://localhost:9090/image/defaultUser.png'"></el-avatar>
               </div>
             </template>
@@ -209,25 +209,7 @@ export default {
         }
       }, 500);
     };
-    var validatePass = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error('请输入密码'));
-      } else {
-        if (this.userForm.password !== '') {
-          this.$refs.addForm.validateField('password');
-        }
-        callback();
-      }
-    };
-    var validatePass2 = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error('请输入密码'));
-      } else if (value !== this.userForm.pass) {
-        callback(new Error('两次输入密码不一致!'));
-      } else {
-        callback();
-      }
-    };
+
     var validateEmpty = (rule, value, callback) => {
       if (!value) {
         callback(new Error('数据不能为空'));
@@ -276,7 +258,7 @@ export default {
           pageNum: this.currentPage, pageSize: this.pageSize, search: this.search
         }
       }).then(res => {
-        console.log(res);
+        // console.log(res);
         this.tableData = res.data.records;
         this.total = res.data.total;
       })
@@ -286,7 +268,7 @@ export default {
       // this.userForm = {};
       this.dialogFormVisible = true;
       this.$nextTick(() => {
-        console.log(this.$refs["userForm"])
+        // console.log(this.$refs["userForm"])
         this.$refs["userForm"].resetFields();
       })
     },

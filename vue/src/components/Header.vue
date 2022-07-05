@@ -10,6 +10,7 @@
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item @click.native="$router.push('/login')">退出系统</el-dropdown-item>
 <!--          <el-dropdown-item>狮子头</el-dropdown-item>-->
+          <el-dropdown-item @click.native="$router.push('/index')">花卉商城</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>

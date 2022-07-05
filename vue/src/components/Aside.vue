@@ -14,15 +14,15 @@
       <!--        <el-menu-item index="1-1">选项1</el-menu-item>-->
       <!--        <el-menu-item index="1-2">选项2</el-menu-item>-->
       <!--      </el-submenu>-->
-      <el-menu-item index="/user">
+      <el-menu-item index="/manage/user">
         <i class="el-icon-menu"></i>
         <span slot="title">用户信息</span>
       </el-menu-item>
-      <el-menu-item index="/goods">
+      <el-menu-item index="/manage/goods">
         <i class="el-icon-document"></i>
         <span slot="title">商品信息</span>
       </el-menu-item>
-      <el-menu-item index="/order">
+      <el-menu-item index="/manage/order">
         <i class="el-icon-setting"></i>
         <span slot="title">订单信息</span>
       </el-menu-item>
@@ -41,7 +41,7 @@ export default {
   methods: {
     handleSelect(key) {
       this.currentMenuItem = key
-      console.log(key)
+      // console.log(key)
     }
   }
 }

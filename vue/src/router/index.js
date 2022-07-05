@@ -1,16 +1,61 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Layout from '../layout/Layout.vue'
-import LoginView from "@/views/LoginView";
+import Layout from '../layout/Manage.vue'
+import LoginView from "@/views/ManageLoginView";
+import Manage from "@/layout/Manage"
+import FlowerMall from "@/layout/FlowerMall";
+import InfoView from "@/views/InfoView";
 
 Vue.use(VueRouter)
 
 const routes = [
     {
         path: '/',
-        name: 'Layout',
-        component: Layout,
-        redirect: "/user",      //重定向
+        name: 'FlowerMall',
+        component: FlowerMall,
+        redirect: "/index",
+        children: [
+            {
+                path: 'index',
+                name: 'Index',
+                component: () => import("@/views/Index"),
+            },
+            {
+                path: '/login',
+                name: 'LoginView',
+                component: () => import("@/views/LoginView")
+            },
+            {
+                path: '/register',
+                name: 'RegisterView',
+                component: () => import("@/views/RegisterView")
+            },
+            {
+                path: 'info',
+                name: 'Info',
+                component: InfoView,
+                redirect: "/info/infoBase",      //重定向
+                children: [{
+                    path: 'infoBase',
+                    name: 'InfoBase',
+                    component: () => import("@/views/InfoBase"),
+                }, {
+                    path: 'infoGoods',
+                    name: 'InfoGoods',
+                    component: () => import("@/views/InfoGoods"),
+                }, {
+                    path: 'infoOrder',
+                    name: 'InfoOrder',
+                    component: () => import("@/views/InfoOrder"),
+                }]
+            },
+        ]
+    },
+    {
+        path: '/manage',
+        name: 'Manage',
+        component: Manage,
+        redirect: "/manageLogin",      //重定向
 
         children: [
             {
@@ -20,7 +65,7 @@ const routes = [
             },
             {
                 path: 'goods',
-                name: 'Goods',
+                name: 'GoodsView',
                 component: () => import("@/views/GoodsView"),
             }, {
                 path: 'order',
@@ -30,16 +75,14 @@ const routes = [
 
         ]
     },
+
     {
-        path: '/login',
-        name: 'LoginView',
-        component: () => import("@/views/LoginView")
+        path: '/manageLogin',
+        name: 'ManageLoginView',
+        component: () => import("@/views/ManageLoginView")
     },
-    // {
-    //     path: '/user',
-    //     name: 'UserView',
-    //     component: () => import("@/views/UserView")
-    // },
+
+
 ]
 
 const router = new VueRouter({

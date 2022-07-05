@@ -116,7 +116,7 @@
     </el-footer>
 
     <!--    ‘新增’/‘编辑’ 按钮弹窗     -->
-    <el-dialog title="修改订单" :visible.sync="dialogFormVisible" width="65%" center>
+    <el-dialog title="订单信息" :visible.sync="dialogFormVisible" width="65%" center>
       <div style="display: flex">
         <el-form :model="orderForm" ref="orderForm" status-icon :rules="orderFormRules" :label-width="'100px'">
           <div style="display: flex">
@@ -126,7 +126,7 @@
               </el-input>
             </el-form-item>
             <el-form-item label="商品名称" prop="goodsName" >
-              <el-input v-model="orderForm.goodsId" class="dialog-el-input" disabled="false"
+              <el-input v-model="orderForm.goodsId" class="dialog-el-input" disabled
                         autocomplete="off" maxlength="11" clearable>
               </el-input>
             </el-form-item>
@@ -263,7 +263,7 @@ export default {
           pageNum: this.currentPage, pageSize: this.pageSize, search: this.search
         }
       }).then(res => {
-        console.log(res);
+        // console.log(res);
         this.tableData = res.data.records;
         this.total = res.data.total;
       })

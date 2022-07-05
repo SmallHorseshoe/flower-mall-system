@@ -8,14 +8,15 @@ import lombok.Data;
 import java.math.BigInteger;
 
 /**
- * 订单实体类
+ * 订单信息和商品信息的联合数据
  */
 @TableName("flower_order")
 @Data
-public class Order {
+public class Order_Goods {
     @TableId(type = IdType.AUTO)
     private BigInteger id;
     private BigInteger goodsId;
+    private String goodsName;
     private BigInteger sellerPhone;
     private BigInteger buyerPhone;
     private Integer sellNumber;
@@ -24,4 +25,8 @@ public class Order {
     private String orderTime;
     private String deliveryTime;
     private String completeTime;
+    private String image1;
+    private String image2;
+    private String image3;
+
 }

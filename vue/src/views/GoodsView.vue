@@ -77,8 +77,8 @@
                 </el-descriptions>
               </div>
               <div style=" margin:0 2px; float: left ; border: 1px solid #eaeaea">
-                <el-avatar shape="square" :size="176" :src="props.row.image1"  fit="fill"
-                          style="background-color: #ffffff"
+                <el-avatar shape="square" :size="176" :src="props.row.image1" fit="fill"
+                           style="background-color: #ffffff"
                            @error="goodsForm.image1='http://localhost:9090/image/defaultImage.png'"></el-avatar>
               </div>
             </template>
@@ -95,7 +95,7 @@
           </el-table-column>
           <el-table-column label="销售数量" prop="sellNumber" sortable>
           </el-table-column>
-          <el-table-column label="上架状态" prop="sellState">
+          <el-table-column label="上架状态" prop="sellState" sortable>
           </el-table-column>
           <el-table-column label="操作" width="134px" fixed="right">
             <template slot-scope="scope">
@@ -124,7 +124,7 @@
     </el-footer>
 
     <!--    ‘新增’/‘编辑’ 按钮弹窗     -->
-    <el-dialog title="添加新用户" :visible.sync="dialogFormVisible" width="78%" center>
+    <el-dialog title="添加新商品" :visible.sync="dialogFormVisible" width="78%" center>
       <div style="display: flex">
         <el-form :model="goodsForm" ref="goodsForm" status-icon :rules="goodsFormRules" :label-width="'100px'">
           <div style="display: flex">
@@ -255,8 +255,8 @@ export default {
         image3: ''
       },
       goodsFormRules: {
-        goodsName: [{required: true, message: "商品名称不能为空"}],
-        goodsPrice: [{required: true, message: "商品价格不能为空"}],
+        goodsName: [{required: true, message: "商品名称不能为空", trigger: 'blur'}],
+        goodsPrice: [{required: true, message: "商品价格不能为空", trigger: 'blur'}],
         sellState: [{validator: validateEmpty, trigger: 'blur'}],
         sellerPhone: [
           {required: true, message: '手机号码不能为空', trigger: 'blur'},
@@ -278,9 +278,11 @@ export default {
           pageNum: this.currentPage, pageSize: this.pageSize, search: this.search
         }
       }).then(res => {
-        console.log(res);
-        this.tableData = res.data.records;
-        this.total = res.data.total;
+        if (res.code === '0') {
+          // console.log(res);
+          this.tableData = res.data.records;
+          this.total = res.data.total;
+        }
       })
     },
     addItem() {
@@ -377,7 +379,7 @@ export default {
 
     },
     handleAvatarSuccess(res) {
-      console.log(res)
+      // console.log(res)
       this.goodsForm.image1 = res.data
     }
   }
