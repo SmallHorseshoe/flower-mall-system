@@ -11,7 +11,7 @@
           ></el-autocomplete>
         </el-col>
         <div style="margin-left: 10px; height: auto">
-          <el-tag v-for="tag in flowerSpecies" closable type="success" @close="handleClose(tag)">
+          <el-tag size="large" v-for="tag in flowerSpecies" closable type="success" @close="handleClose(tag)">
             {{ tag }}
           </el-tag>
         </div>
@@ -32,6 +32,9 @@
               </el-select>
               <el-button slot="append" icon="el-icon-search" @click="load"></el-button>
             </el-input>
+            <el-select v-model="sortItem" placeholder="排序方式" @change="load" clearable style="margin: 20px 10px; width: 200px">
+              <el-option v-for="item in sortItems" :key="item" :label="item" :value="item"></el-option>
+            </el-select>
           </div>
           <div style="margin-left: 5px; width: 99%">
             <template>
@@ -166,6 +169,8 @@ export default {
       selectSearch: '',
       inputSearch: '',
       goodsData: [],
+      sortItems: ['按销量升序', '按销量降序', '按价格升序', '按价格降序'],
+      sortItem: '',
       goodsInfo: {
         goodsName: '',
         goodsPrice: '',
@@ -236,7 +241,12 @@ export default {
         flowerSpecies = flowerSpecies.substring(0, flowerSpecies.length - 1)
       // console.log(flowerSpecies.substring(0, flowerSpecies.length - 1))
       request.get("/goods/list", {
-        params: {species: flowerSpecies, searchType: this.selectSearch, search: this.inputSearch}
+        params: {
+          species: flowerSpecies,
+          searchType: this.selectSearch,
+          search: this.inputSearch,
+          sortType: this.sortItem
+        }
       }).then(res => {
         // console.log(res);
         this.goodsData = res.data;

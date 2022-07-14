@@ -166,7 +166,7 @@
               action="http://localhost:9090/image/upload/"
               :show-file-list="false"
               :on-success="handleAvatarSuccess">
-            <el-image :src="userForm.avatar" style="display: block"
+            <el-image ref="avatar" :src="userForm.avatar" style="display: block"
                       @error="userForm.avatar='http://localhost:9090/image/defaultUser.png'"></el-image>
             <el-button size="small" type="primary">点击更换头像</el-button>
           </el-upload>
@@ -270,6 +270,8 @@ export default {
       this.$nextTick(() => {
         // console.log(this.$refs["userForm"])
         this.$refs["userForm"].resetFields();
+        // this.$refs["avatar"].
+        this.userForm.avatar = ''
       })
     },
     cancelAddItem() {

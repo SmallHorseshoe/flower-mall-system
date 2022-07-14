@@ -53,9 +53,9 @@ public class GoodsController {
     ) {
         Page<Goods> userPage = goodsMapper.selectPage(
                 new Page<>(pageNum, pageSize),
-                Wrappers.<Goods>lambdaQuery().like(Goods::getGoodsNumber, search)
-                        .like(Goods::getFlowerSpecies, search)
-                        .like(Goods::getGoodsPrice, search));
+                Wrappers.<Goods>lambdaQuery().like(Goods::getGoodsName, search));
+//                        .like(Goods::getFlowerSpecies, search)
+//                        .like(Goods::getGoodsPrice, search));
         return Result.success(userPage);
     }
 
@@ -63,7 +63,8 @@ public class GoodsController {
     public Result<?> goodList(
             @RequestParam(defaultValue = "") String species,
             @RequestParam(defaultValue = "商品名称") String searchType,
-            @RequestParam(defaultValue = "") String search
+            @RequestParam(defaultValue = "") String search,
+            @RequestParam(defaultValue = "") String sortType
     ) {
         String[] flowerSpecies = species.split(":");
         StringBuilder sql = new StringBuilder("SELECT * FROM `goods` WHERE ");
@@ -81,6 +82,22 @@ public class GoodsController {
         } else if (searchType.equals("商家名称")) {
             sql.append(" and seller_phone in").append("(select user_phone FROM `user` where nickname LIKE '%").append(search).append("%')");
         }
+        switch (sortType) {
+            case "按销量升序":
+                sql.append(" order by sell_number ASC");
+                break;
+            case "按销量降序":
+                sql.append(" order by sell_number DESC");
+                break;
+            case "按价格升序":
+                sql.append(" order by goods_price ASC");
+                break;
+            case "按价格降序":
+                sql.append(" order by goods_price DESC");
+                break;
+            default:
+                break;
+        }
         System.out.println("SQL: " + sql);
         List<Goods> goodsList = goodsMapper.dynamicSql(String.valueOf(sql));
         return Result.success(goodsList);
@@ -88,8 +105,10 @@ public class GoodsController {
 
     @GetMapping("/species")
     public Result<?> getSpecies() {
-        return Result.success(new String[]{"玫瑰花", "康乃馨", "百合花", "向日葵", "满天星", "薰衣草", "紫罗兰", "菊花", "郁金香"});
+        List<String> res = goodsMapper.dynamicSqlForString("SELECT DISTINCT flower_species FROM goods");
+        return Result.success(res);
     }
+
 
     @GetMapping("/goodsInfo")
     public Result<?> getGoodsInfo(@RequestParam(defaultValue = "1") BigInteger userPhone) {

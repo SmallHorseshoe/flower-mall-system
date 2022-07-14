@@ -12,4 +12,7 @@ import java.util.List;
 public interface GoodsMapper extends BaseMapper<Goods> {
     @Select("${sqlStr}")
     List<Goods> dynamicSql(@Param("sqlStr") String sql);
+
+    @Select("${sqlStr}")
+    List<String> dynamicSqlForString(@Param("sqlStr") String sql);
 }
