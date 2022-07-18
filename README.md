@@ -99,6 +99,6 @@
 
 > views文件中放置了各个页面；components文件中放置一些公共组件；utils/request.js中进行axios相关配置
 
-###项目启动方法
+### 项目启动方法
 项目前后端分离，因此需分别启动前后端，前端为npm,如下图所示。后端为springboot,直接启动即可
 ![img.png](img.png)
