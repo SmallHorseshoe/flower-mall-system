@@ -67,7 +67,7 @@ public class GoodsController {
             @RequestParam(defaultValue = "") String sortType
     ) {
         String[] flowerSpecies = species.split(":");
-        StringBuilder sql = new StringBuilder("SELECT * FROM `goods` WHERE ");
+        StringBuilder sql = new StringBuilder("SELECT * FROM `goods` WHERE sell_state='上架中' AND ");
         // 筛查花卉品种
         if (flowerSpecies.length > 0) {
             sql.append("(");
@@ -78,9 +78,9 @@ public class GoodsController {
             sql.append(")");
         }
         if (searchType.equals("商品名称")) {
-            sql.append(" and goods_name like '%").append(search).append("%'");
+            sql.append(" AND goods_name like '%").append(search).append("%'");
         } else if (searchType.equals("商家名称")) {
-            sql.append(" and seller_phone in").append("(select user_phone FROM `user` where nickname LIKE '%").append(search).append("%')");
+            sql.append(" AND seller_phone in").append("(select user_phone FROM `user` where nickname LIKE '%").append(search).append("%')");
         }
         switch (sortType) {
             case "按销量升序":

@@ -32,7 +32,8 @@
               </el-select>
               <el-button slot="append" icon="el-icon-search" @click="load"></el-button>
             </el-input>
-            <el-select v-model="sortItem" placeholder="排序方式" @change="load" clearable style="margin: 20px 10px; width: 200px">
+            <el-select v-model="sortItem" placeholder="排序方式" @change="load" clearable
+                       style="margin: 20px 10px; width: 200px">
               <el-option v-for="item in sortItems" :key="item" :label="item" :value="item"></el-option>
             </el-select>
           </div>
@@ -89,6 +90,7 @@
                 <el-descriptions-item label="商品名称">{{ goodsInfo.goodsName }}</el-descriptions-item>
                 <el-descriptions-item label="花卉品种">{{ goodsInfo.flowerSpecies }}</el-descriptions-item>
                 <el-descriptions-item label="商品价格"> ￥ {{ goodsInfo.goodsPrice }}</el-descriptions-item>
+                <el-descriptions-item label="商品销量"> {{ goodsInfo.sellNumber }}件</el-descriptions-item>
                 <el-descriptions-item label="商品产地">{{ goodsInfo.goodsAddress }}</el-descriptions-item>
                 <el-descriptions-item label="商品数量">{{ goodsInfo.goodsNumber }}件</el-descriptions-item>
                 <el-descriptions-item label="商品详情">{{ goodsInfo.description }}</el-descriptions-item>
@@ -254,6 +256,13 @@ export default {
       })
     },
     purchase() {
+      if (this.GLOBAL.userPhone == this.goodsInfo.sellerPhone) {
+        this.$message({
+          type: "error",
+          message: "不能购买自己的商品！"
+        });
+        return
+      }
       this.dialogFormVisible = true
       this.orderForm.goodsId = this.goodsInfo.id
       this.goodsNumber = ''
@@ -278,6 +287,8 @@ export default {
           }
           //商品数量减少
           this.goodsInfo.goodsNumber = this.goodsInfo.goodsNumber - this.goodsNumber
+          //商品销量增加
+          this.goodsInfo.sellNumber = this.goodsInfo.sellNumber + this.goodsNumber
           request.put("/goods", this.goodsInfo).then(res => {
             // console.log(res);
             if (res.code === '0') {

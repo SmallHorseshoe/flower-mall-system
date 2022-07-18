@@ -21,8 +21,8 @@
             <el-form-item label="身份证号" style="display:flex; width: 300px">
               <el-input v-model="infoData.idCard" maxlength="18"></el-input>
             </el-form-item>
-            <el-form-item label="手机号码" style="display:flex; width: 300px">
-              <el-input v-model.number="infoData.userPhone" maxlength="11"></el-input>
+            <el-form-item label="手机号码" style="display:flex; width: 300px" >
+              <el-input v-model.number="infoData.userPhone" disabled maxlength="11"></el-input>
             </el-form-item>
           </div>
           <div style="display: block">
@@ -53,7 +53,7 @@
       <div v-else>
         <div style="height: 188px; ">
           <div style="float: left">
-            <el-form-item label="我的昵称" style="display:flex; width: 250px"> {{ infoData.userName }}</el-form-item>
+            <el-form-item label="我的昵称" style="display:flex; width: 250px"> {{ infoData.nickname }}</el-form-item>
             <el-form-item label="我的密码" style="display:flex; width: 250px"> ******</el-form-item>
             <el-form-item label="我的性别" style="display:flex; width: 250px"> {{ infoData.sex }}</el-form-item>
           </div>
@@ -130,6 +130,7 @@ export default {
             type: "success",
             message: "修改成功！"
           });
+          // this.GLOBAL.userPhone = this.infoData.userPhone
         } else {
           this.$message({
             type: "error",

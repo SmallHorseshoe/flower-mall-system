@@ -82,9 +82,9 @@ public class UserController {
         Page<User> userPage = userMapper.selectPage(
                 new Page<>(pageNum, pageSize),
                 Wrappers.<User>lambdaQuery()
-                        .like(User::getUserName, search)
+//                        .like(User::getUserName, search)
                         .like(User::getUserPhone, search)
-                        .like(User::getIdCard, search)
+//                        .like(User::getIdCard, search)
         );
         return Result.success(userPage);
     }

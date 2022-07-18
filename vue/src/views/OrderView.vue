@@ -122,7 +122,7 @@
           <div style="display: flex">
             <el-form-item label="商品编号" prop="goodsId">
               <el-input v-model.number="orderForm.goodsId" class="dialog-el-input"
-                        autocomplete="off" maxlength="11" clearable>
+                        autocomplete="off" maxlength="11" disabled>
               </el-input>
             </el-form-item>
             <el-form-item label="商品名称" prop="goodsName" >
